@@ -1,0 +1,480 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \Onpay</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">6</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">3</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: Конструктор."><span class="description">Конструктор.</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#check_errors" title="check_errors :: Валидирует запросы check или pay от Onpay."><span class="description">Валидирует запросы check или pay от Onpay.</span><pre>check_errors()</pre></a></li>
+<li class="method public "><a href="#check_order" title="check_order :: Проверка существования ордера по его id."><span class="description">Проверка существования ордера по его id.</span><pre>check_order()</pre></a></li>
+<li class="method public "><a href="#err" title="err :: "><span class="description">err()
+        </span><pre>err()</pre></a></li>
+<li class="method public "><a href="#gen_xml_answer" title="gen_xml_answer :: Генерирует корректный XML-ответ для onpay включая цифровую подпись."><span class="description">Генерирует корректный XML-ответ для onpay включая цифровую подпись.</span><pre>gen_xml_answer()</pre></a></li>
+<li class="method public "><a href="#generate_error" title="generate_error :: Функция генерирует корректный XML с ошибкой."><span class="description">Функция генерирует корректный XML с ошибкой.</span><pre>generate_error()</pre></a></li>
+<li class="method public "><a href="#get_form" title="get_form :: Функция генерирует ссылку или редирект на платежную форму."><span class="description">Функция генерирует ссылку или редирект на платежную форму.</span><pre>get_form()</pre></a></li>
+<li class="method public "><a href="#get_last_order" title="get_last_order :: Последний записанный ID в БД в текущей сессии."><span class="description">Последний записанный ID в БД в текущей сессии.</span><pre>get_last_order()</pre></a></li>
+<li class="method public "><a href="#get_this_url" title="get_this_url :: Возвращает корректный URL до скрипта, в котором запрашивается функция."><span class="description">Возвращает корректный URL до скрипта, в котором запрашивается функция.</span><pre>get_this_url()</pre></a></li>
+<li class="method public "><a href="#process_onpay" title="process_onpay :: Функция-процессор onpay."><span class="description">Функция-процессор onpay.</span><pre>process_onpay()</pre></a></li>
+<li class="method public "><a href="#to_float" title="to_float :: Округляет/преобразует строковое значение $sum в тип float с 2-я знаками после запятой."><span class="description">Округляет/преобразует строковое значение $sum в тип float с 2-я знаками после запятой.</span><pre>to_float()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#get_payed_status" title="get_payed_status :: "><span class="description">get_payed_status()
+        </span><pre>get_payed_status()</pre></a></li>
+<li class="method private "><a href="#set_payed_status" title="set_payed_status :: "><span class="description">set_payed_status()
+        </span><pre>set_payed_status()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24admin_email" title="$admin_email :: Email администратора магазина."><span class="description">Email администратора магазина.</span><pre>$admin_email</pre></a></li>
+<li class="property public "><a href="#%24classpath" title="$classpath :: Содержит путь к директории класса."><span class="description">Содержит путь к директории класса.</span><pre>$classpath</pre></a></li>
+<li class="property public "><a href="#%24convert" title="$convert :: Принудительная конвертация платежей в валюту ценника."><span class="description">Принудительная конвертация платежей в валюту ценника.</span><pre>$convert</pre></a></li>
+<li class="property public "><a href="#%24curency" title="$curency :: 3-х символьное наименование валюты. Основная валюта ценника."><span class="description">3-х символьное наименование валюты. Основная валюта ценника.</span><pre>$curency</pre></a></li>
+<li class="property public "><a href="#%24db" title="$db :: После инициализации класса содержит ссылку на объект БД."><span class="description">После инициализации класса содержит ссылку на объект БД.</span><pre>$db</pre></a></li>
+<li class="property public "><a href="#%24debug" title="$debug :: Режим отладки."><span class="description">Режим отладки.</span><pre>$debug</pre></a></li>
+<li class="property public "><a href="#%24error" title="$error :: "><span class="description">&lt;p&gt;хранит ошибки&lt;/p&gt;
+</span><pre>$error</pre></a></li>
+<li class="property public "><a href="#%24form_num" title="$form_num :: Вариант дизайна платежной формы"><span class="description">Вариант дизайна платежной формы</span><pre>$form_num</pre></a></li>
+<li class="property public "><a href="#%24key" title="$key :: Пользовательский ключ API IN."><span class="description">Пользовательский ключ API IN.</span><pre>$key</pre></a></li>
+<li class="property public "><a href="#%24ln" title="$ln :: Язык отображения платежной формы."><span class="description">Язык отображения платежной формы.</span><pre>$ln</pre></a></li>
+<li class="property public "><a href="#%24mode" title="$mode :: Режим работы класса."><span class="description">Режим работы класса.</span><pre>$mode</pre></a></li>
+<li class="property public "><a href="#%24price_final" title="$price_final :: Комиссию платежной системы взымать с продавца."><span class="description">Комиссию платежной системы взымать с продавца.</span><pre>$price_final</pre></a></li>
+<li class="property public "><a href="#%24url_fail" title="$url_fail :: Ссылка, на которую будет переадресован пользователь после неудачного завершения платежа."><span class="description">Ссылка, на которую будет переадресован пользователь после неудачного завершения платежа.</span><pre>$url_fail</pre></a></li>
+<li class="property public "><a href="#%24url_success" title="$url_success :: Ссылка, на которую будет переадресован пользователь после успешного завершения платежа."><span class="description">Ссылка, на которую будет переадресован пользователь после успешного завершения платежа.</span><pre>$url_success</pre></a></li>
+<li class="property public "><a href="#%24userform" title="$userform :: Адрес платежной формы Onpay. По умолчанию это логин пользователя на сайте onpay."><span class="description">Адрес платежной формы Onpay. По умолчанию это логин пользователя на сайте onpay.</span><pre>$userform</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5COnpay" id="\Onpay"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/default.html">default</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/Onpay.html">Onpay</a>
+</li>
+</ul>
+<div href="../classes/Onpay.html" class="element class">
+<p class="short_description">Класс взаимодействия с API Onpay</p>
+<div class="details">
+<p class="long_description"></p>
+<table class="table table-bordered">
+<tr>
+<th>author</th>
+<td><a href="">norgen</a></td>
+</tr>
+<tr>
+<th>version</th>
+<td>1.0</td>
+</tr>
+<tr>
+<th>filesource</th>
+<td></td>
+</tr>
+<tr>
+<th>namespace</th>
+<td>Onpay</td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>Конструктор.</h2>
+<pre>__construct(string $mode, string $username, string $key) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">Используется как:
+<pre><code>$opy = new Onpay('internal_db', 'petyastore', 'ajsdansdbascasc');
+</code></pre></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>string</code><p>режим работы класса onpay. Устанавливает Onpay::$mode</p>
+</div>
+<div class="subelement argument">
+<h4>$username</h4>
+<code>string</code><p>адрес формы onpay. Устанавливает Onpay::$userform</p>
+</div>
+<div class="subelement argument">
+<h4>$key</h4>
+<code>string</code><p>ключ API IN. Устанавливает Onpay::$key</p>
+</div>
+</div></div>
+</div>
+<a name="check_errors" id="check_errors"></a><div class="element clickable method public check_errors" data-toggle="collapse" data-target=".check_errors .collapse">
+<h2>Валидирует запросы check или pay от Onpay.</h2>
+<pre>check_errors(array $request) : bool | string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">Ошибки записывает в лог-файл.
+Используется внутри класса, но возможно пользовательское использование.</p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$request</h4>
+<code>array</code><p>get или post запрос ($_REQUEST).</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code><code>string</code>возвращает список ошибок или false, если ошибки отсутствуют.</div>
+</div></div>
+</div>
+<a name="check_order" id="check_order"></a><div class="element clickable method public check_order" data-toggle="collapse" data-target=".check_order .collapse">
+<h2>Проверка существования ордера по его id.</h2>
+<pre>check_order(integer $order_id, string $summ) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">Если установлен параметр $summ - то проверяется и то, чтоб оплаченная сумма была не меньше стоимости заказа.</p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$order_id</h4>
+<code>integer</code><p>id проверяемого ордера</p>
+</div>
+<div class="subelement argument">
+<h4>$summ</h4>
+<code>string</code><p>если установлен - проверяется еще и корректность суммы.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>true если ордер существует (и сумма соответсвует), иначе false</div>
+</div></div>
+</div>
+<a name="err" id="err"></a><div class="element clickable method public err" data-toggle="collapse" data-target=".err .collapse">
+<h2>err()
+        </h2>
+<pre>err($message) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$message</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="gen_xml_answer" id="gen_xml_answer"></a><div class="element clickable method public gen_xml_answer" data-toggle="collapse" data-target=".gen_xml_answer .collapse">
+<h2>Генерирует корректный XML-ответ для onpay включая цифровую подпись.</h2>
+<pre>gen_xml_answer(array $data) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">Используется внутри класса, но возможно пользовательское использование.
+Пример использования:
+<pre><code>$opy = new Onpay('internal_db', 'petyastore', 'ajsdansdbascasc');
+$data = array('type' => 'check', 'code' => 0, 'pay_for' => 2, 'comment' => 'Это текстовый комментарий', 'order_amount' => 20, 'order_currency' => 'RUR');
+echo $opy->gen_xml_answer($data);
+</code></pre>
+Где:
+type - ответ на какой запрос генерировать - check или pay;
+code - код возврата:
+0 ОК – означает, что “уведомление о платеже принято” если тип запроса был “pay” или “может быть принято” если тип запроса был “check”;
+
+pay_for - ID Клиента или заказа в системе Мерчанта для которых производится этот платеж;
+comment - Заметка, включённая в платёжную форму в системе Мерчанта. Будет доступна в списке платежей в интерфейсе Мерчанта;
+order_amount - Сумма платежа как в атрибуте “price” платёжной ссылки;
+order_currency - Валюта, как в атрибуте “currency” платёжной ссылки;
+key - ключ API IN.</p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>array</code><p>массив с данными.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>ответ в формате XML</div>
+</div></div>
+</div>
+<a name="generate_error" id="generate_error"></a><div class="element clickable method public generate_error" data-toggle="collapse" data-target=".generate_error .collapse">
+<h2>Функция генерирует корректный XML с ошибкой.</h2>
+<pre>generate_error(string $num, array $data) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">2 Только для запросов типа “check” Платёж отклонён. В этом случае OnPay не примет платёж от Клиента;
+3 Ошибка в параметрах. OnPay не будет пытаться повторно послать это уведомление в API мерчанта и отметит этот платёж статусом “уведомление не доставлено в API” если тип запроса “pay”. Если тип запроса “check” – OnPay не примет этот платеж;
+7 Ошибка авторизации. MD5 подпись неверна;
+10 Временная ошибка. OnPay попробует повторно послать это уведомление несколько раз в течение следующих 72 часов после чего пометит платёж статусом “уведомление не доставлено в API”);</p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$num</h4>
+<code>string</code><p>номер ошибки (2,3 или 7)</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>array</code><p>данные запроса</p>
+</div>
+</div></div>
+</div>
+<a name="get_form" id="get_form"></a><div class="element clickable method public get_form" data-toggle="collapse" data-target=".get_form .collapse">
+<h2>Функция генерирует ссылку или редирект на платежную форму.</h2>
+<pre>get_form(string $type, string $summ, string $user_email) : bool | string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">Одновременно добавляет запись в БД (только при режиме "internal_db")</p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>string</code><p>тип формы. Возможные варианты: redirect - генерируется JS-код, при выводе которого в браузер происходит редирект на страницу формы с необходимыми параметрами. url - генерируется ссылка на форму, которую можно вставить в параметр href.</p>
+</div>
+<div class="subelement argument">
+<h4>$summ</h4>
+<code>string</code><p>сумма в валюте ценника. До 2-х знаков после запятой.</p>
+</div>
+<div class="subelement argument">
+<h4>$user_email</h4>
+<code>string</code><p>email адрес покупателя</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code><code>string</code>возвращает false в случае ошибки. Ошибку записывает в лог-файл.</div>
+</div></div>
+</div>
+<a name="get_last_order" id="get_last_order"></a><div class="element clickable method public get_last_order" data-toggle="collapse" data-target=".get_last_order .collapse">
+<h2>Последний записанный ID в БД в текущей сессии.</h2>
+<pre>get_last_order() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>последний записанный ID</div>
+</div></div>
+</div>
+<a name="get_this_url" id="get_this_url"></a><div class="element clickable method public get_this_url" data-toggle="collapse" data-target=".get_this_url .collapse">
+<h2>Возвращает корректный URL до скрипта, в котором запрашивается функция.</h2>
+<pre>get_this_url() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">(Может применяться для вывода URL API IN мерчанта, если функция callback находится в том-же скрипте,
+что и вызывающая функцию строка скрипта)</p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="process_onpay" id="process_onpay"></a><div class="element clickable method public process_onpay" data-toggle="collapse" data-target=".process_onpay .collapse">
+<h2>Функция-процессор onpay.</h2>
+<pre>process_onpay(array $request) : bool | string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description">Обрабатывает запрос и выполняет необходимые действия по смене статуса заказа
+TODO Необходима проработка для возможности использования с объектом БД MySql</p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$request</h4>
+<code>array</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code><code>string</code>возвращает false ghb ytelfxt</div>
+</div></div>
+</div>
+<a name="to_float" id="to_float"></a><div class="element clickable method public to_float" data-toggle="collapse" data-target=".to_float .collapse">
+<h2>Округляет/преобразует строковое значение $sum в тип float с 2-я знаками после запятой.</h2>
+<pre>to_float(string $sum) : float</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$sum</h4>
+<code>string</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>float</code></div>
+</div></div>
+</div>
+<a name="get_payed_status" id="get_payed_status"></a><div class="element clickable method private get_payed_status" data-toggle="collapse" data-target=".get_payed_status .collapse">
+<h2>get_payed_status()
+        </h2>
+<pre>get_payed_status($order_id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$order_id</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<a name="set_payed_status" id="set_payed_status"></a><div class="element clickable method private set_payed_status" data-toggle="collapse" data-target=".set_payed_status .collapse">
+<h2>set_payed_status()
+        </h2>
+<pre>set_payed_status($request) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$request</h4>
+<code></code>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24admin_email" id="$admin_email"> </a><div class="element clickable property public $admin_email" data-toggle="collapse" data-target=".$admin_email .collapse">
+<h2>Email администратора магазина.</h2>
+<pre>$admin_email : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Если он задан, на него будут отправляться уведомления об операциях.
+Возможные варианты: email в формате mail@domen.ru | пусто</p></div></div>
+</div>
+<a name="%24classpath" id="$classpath"> </a><div class="element clickable property public $classpath" data-toggle="collapse" data-target=".$classpath .collapse">
+<h2>Содержит путь к директории класса.</h2>
+<pre>$classpath : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24convert" id="$convert"> </a><div class="element clickable property public $convert" data-toggle="collapse" data-target=".$convert .collapse">
+<h2>Принудительная конвертация платежей в валюту ценника.</h2>
+<pre>$convert : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Если включена – все поступающие платежи будут конвертироваться в валюту ценника.
+Т.е. если в ссылке установлена стоимость 100RUR, а клиент оплатил с помощью USD – Вы получите на счет 100RUR.
+Если выключена, Вы получите ту валюту, которой платит клиент.
+Т.е. например, пользователь платит 3.5WMZ за Ваш товар стоимостью 100RUR –
+Вы получите 3.5WMZ на свой WMZ счет в системе OnPay (при этом уведомление по API будет содержать 100RUR).
+
+“yes” – включена “no” - выключена, по умолчанию включена.</p></div></div>
+</div>
+<a name="%24curency" id="$curency"> </a><div class="element clickable property public $curency" data-toggle="collapse" data-target=".$curency .collapse">
+<h2>3-х символьное наименование валюты. Основная валюта ценника.</h2>
+<pre>$curency : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">TODO Нужны возможные значения.
+По умолчанию: RUR</p></div></div>
+</div>
+<a name="%24db" id="$db"> </a><div class="element clickable property public $db" data-toggle="collapse" data-target=".$db .collapse">
+<h2>После инициализации класса содержит ссылку на объект БД.</h2>
+<pre>$db : <a href="http://php.net/manual/en/class.sqlite3.php">\SQLite3</a> | \MySql</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">TODO Нужно доработать.</p></div></div>
+</div>
+<a name="%24debug" id="$debug"> </a><div class="element clickable property public $debug" data-toggle="collapse" data-target=".$debug .collapse">
+<h2>Режим отладки.</h2>
+<pre>$debug : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Если True, то все ссылки/запросы пишутся в log-файл в директории с классом.
+По умолчанию: true</p></div></div>
+</div>
+<a name="%24error" id="$error"> </a><div class="element clickable property public $error" data-toggle="collapse" data-target=".$error .collapse">
+<h2>&lt;p&gt;хранит ошибки&lt;/p&gt;
+</h2>
+<pre>$error : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24form_num" id="$form_num"> </a><div class="element clickable property public $form_num" data-toggle="collapse" data-target=".$form_num .collapse">
+<h2>Вариант дизайна платежной формы</h2>
+<pre>$form_num : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Возможные варианты: 7, 8
+По умолчанию: форма №8.</p></div></div>
+</div>
+<a name="%24key" id="$key"> </a><div class="element clickable property public $key" data-toggle="collapse" data-target=".$key .collapse">
+<h2>Пользовательский ключ API IN.</h2>
+<pre>$key : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Задается в настройках сайта в личном кабинете на сайте Onpay.</p></div></div>
+</div>
+<a name="%24ln" id="$ln"> </a><div class="element clickable property public $ln" data-toggle="collapse" data-target=".$ln .collapse">
+<h2>Язык отображения платежной формы.</h2>
+<pre>$ln : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Есть возможность сделать форму на любом языке - для этого пишите запрос в службу поддержки.
+Возможные варианты: en | ru
+По умолчанию: ru</p></div></div>
+</div>
+<a name="%24mode" id="$mode"> </a><div class="element clickable property public $mode" data-toggle="collapse" data-target=".$mode .collapse">
+<h2>Режим работы класса.</h2>
+<pre>$mode : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Возможные варианты:
+internal_db - используется внутренняя БД класса;
+external_db - используется объект пользовательской БД.
+TODO Пока работает только режим internal_db.
+По умолчанию: internal_db</p></div></div>
+</div>
+<a name="%24price_final" id="$price_final"> </a><div class="element clickable property public $price_final" data-toggle="collapse" data-target=".$price_final .collapse">
+<h2>Комиссию платежной системы взымать с продавца.</h2>
+<pre>$price_final : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">К стоимости заказа не будет прибавляться комиссия платежной системы на ввод.
+Возможные значения: true | false
+По умолчанию: false (комиссия взымается с покупателя)</p></div></div>
+</div>
+<a name="%24url_fail" id="$url_fail"> </a><div class="element clickable property public $url_fail" data-toggle="collapse" data-target=".$url_fail .collapse">
+<h2>Ссылка, на которую будет переадресован пользователь после неудачного завершения платежа.</h2>
+<pre>$url_fail : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Внимание! Не может содержать параметры запроса (все, что идет после «?» в ссылке).</p></div></div>
+</div>
+<a name="%24url_success" id="$url_success"> </a><div class="element clickable property public $url_success" data-toggle="collapse" data-target=".$url_success .collapse">
+<h2>Ссылка, на которую будет переадресован пользователь после успешного завершения платежа.</h2>
+<pre>$url_success : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description">Внимание! Не может содержать параметры запроса (все, что идет после «?» в ссылке).</p></div></div>
+</div>
+<a name="%24userform" id="$userform"> </a><div class="element clickable property public $userform" data-toggle="collapse" data-target=".$userform .collapse">
+<h2>Адрес платежной формы Onpay. По умолчанию это логин пользователя на сайте onpay.</h2>
+<pre>$userform : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a3</a> and<br>
+            generated on 2012-05-31T23:40:18+06:00.<br></footer></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a3" title="">
+  <file path="\index.php" hash="b5f829162d9ec47cd9cc35b9c37ffa94" package="Default">
+    <parse_markers>
+      <error line="1" code="50007">No page-level DocBlock was found in file \index.php</error>
+    </parse_markers>
+    <include line="15" type="Require Once" package="Default">
+      <name>onpay.class/onpay.class.php</name>
+      <docblock line="2">
+        <description><![CDATA[Пример реализации продажи с помощью класса Onpay.]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="2" name="author" description="norgen"/>
+        <tag line="2" name="version" description="1.0"/>
+        <tag line="2" name="namespace" description="Onpay"/>
+      </docblock>
+    </include>
+  </file>
+  <file path="\onpay.class\onpay.class.php" hash="e6ec747f790a30e31c810456bd6b8da3" package="Default">
+    <markers>
+      <todo line="209">Тут нужно сделать чтение id из переданного объекта БД</todo>
+      <todo line="372">Все ок, меняем статус.</todo>
+      <todo line="427">Тут нужно дописать функционал установки статуса "Оплачено" в переданной пользователем БД.</todo>
+    </markers>
+    <parse_markers>
+      <critical line="144" code="50019">No short description for property $error</critical>
+      <error line="419" code="50010">No DocBlock was found for method set_payed_status()</error>
+      <error line="431" code="50010">No DocBlock was found for method get_payed_status()</error>
+      <error line="488" code="50010">No DocBlock was found for method err()</error>
+      <error line="1" code="50007">No page-level DocBlock was found in file \onpay.class\onpay.class.php</error>
+    </parse_markers>
+    <class final="false" abstract="false" namespace="default" line="13" package="Default">
+      <name>Onpay</name>
+      <full_name>\Onpay</full_name>
+      <extends/>
+      <docblock line="3">
+        <description><![CDATA[Класс взаимодействия с API Onpay]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="3" name="author" description="norgen"/>
+        <tag line="3" name="version" description="1.0"/>
+        <tag line="3" name="filesource" description=""/>
+        <tag line="3" name="namespace" description="Onpay"/>
+      </docblock>
+      <property final="false" static="false" visibility="public" line="23" package="Default">
+        <name>$key</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="16">
+          <description><![CDATA[Пользовательский ключ API IN.]]></description>
+          <long-description><![CDATA[Задается в настройках сайта в личном кабинете на сайте Onpay.]]></long-description>
+          <tag line="16" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="29" package="Default">
+        <name>$userform</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="25">
+          <description><![CDATA[Адрес платежной формы Onpay. По умолчанию это логин пользователя на сайте onpay.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="25" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="38" package="Default">
+        <name>$admin_email</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="31">
+          <description><![CDATA[Email администратора магазина.]]></description>
+          <long-description><![CDATA[Если он задан, на него будут отправляться уведомления об операциях.
+Возможные варианты: email в формате mail@domen.ru | пусто]]></long-description>
+          <tag line="31" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="47" package="Default">
+        <name>$curency</name>
+        <default><![CDATA['RUR']]></default>
+        <docblock line="40">
+          <description><![CDATA[3-х символьное наименование валюты. Основная валюта ценника.]]></description>
+          <long-description><![CDATA[TODO Нужны возможные значения.
+По умолчанию: RUR]]></long-description>
+          <tag line="40" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="62" package="Default">
+        <name>$convert</name>
+        <default><![CDATA["yes"]]></default>
+        <docblock line="49">
+          <description><![CDATA[Принудительная конвертация платежей в валюту ценника.]]></description>
+          <long-description><![CDATA[Если включена – все поступающие платежи будут конвертироваться в валюту ценника.
+Т.е. если в ссылке установлена стоимость 100RUR, а клиент оплатил с помощью USD – Вы получите на счет 100RUR.
+Если выключена, Вы получите ту валюту, которой платит клиент.
+Т.е. например, пользователь платит 3.5WMZ за Ваш товар стоимостью 100RUR –
+Вы получите 3.5WMZ на свой WMZ счет в системе OnPay (при этом уведомление по API будет содержать 100RUR).
+
+“yes” – включена “no” - выключена, по умолчанию включена.]]></long-description>
+          <tag line="49" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="71" package="Default">
+        <name>$form_num</name>
+        <default><![CDATA["8"]]></default>
+        <docblock line="64">
+          <description><![CDATA[Вариант дизайна платежной формы]]></description>
+          <long-description><![CDATA[Возможные варианты: 7, 8
+По умолчанию: форма №8.]]></long-description>
+          <tag line="64" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="81" package="Default">
+        <name>$price_final</name>
+        <default><![CDATA[false]]></default>
+        <docblock line="73">
+          <description><![CDATA[Комиссию платежной системы взымать с продавца.]]></description>
+          <long-description><![CDATA[К стоимости заказа не будет прибавляться комиссия платежной системы на ввод.
+Возможные значения: true | false
+По умолчанию: false (комиссия взымается с покупателя)]]></long-description>
+          <tag line="73" name="var" description="" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="91" package="Default">
+        <name>$ln</name>
+        <default><![CDATA["ru"]]></default>
+        <docblock line="83">
+          <description><![CDATA[Язык отображения платежной формы.]]></description>
+          <long-description><![CDATA[Есть возможность сделать форму на любом языке - для этого пишите запрос в службу поддержки.
+Возможные варианты: en | ru
+По умолчанию: ru]]></long-description>
+          <tag line="83" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="99" package="Default">
+        <name>$url_success</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="93">
+          <description><![CDATA[Ссылка, на которую будет переадресован пользователь после успешного завершения платежа.]]></description>
+          <long-description><![CDATA[Внимание! Не может содержать параметры запроса (все, что идет после «?» в ссылке).]]></long-description>
+          <tag line="93" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="107" package="Default">
+        <name>$url_fail</name>
+        <default><![CDATA[""]]></default>
+        <docblock line="101">
+          <description><![CDATA[Ссылка, на которую будет переадресован пользователь после неудачного завершения платежа.]]></description>
+          <long-description><![CDATA[Внимание! Не может содержать параметры запроса (все, что идет после «?» в ссылке).]]></long-description>
+          <tag line="101" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="116" package="Default">
+        <name>$debug</name>
+        <default><![CDATA[false]]></default>
+        <docblock line="109">
+          <description><![CDATA[Режим отладки.]]></description>
+          <long-description><![CDATA[Если True, то все ссылки/запросы пишутся в log-файл в директории с классом.
+По умолчанию: true]]></long-description>
+          <tag line="109" name="var" description="" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="124" package="Default">
+        <name>$db</name>
+        <default><![CDATA[]]></default>
+        <docblock line="118">
+          <description><![CDATA[После инициализации класса содержит ссылку на объект БД.]]></description>
+          <long-description><![CDATA[TODO Нужно доработать.]]></long-description>
+          <tag line="118" name="var" description="object" type="\SQLite3|\MySql">
+            <type by_reference="false">\SQLite3</type>
+            <type by_reference="false">\MySql</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="136" package="Default">
+        <name>$mode</name>
+        <default><![CDATA["internal_db"]]></default>
+        <docblock line="126">
+          <description><![CDATA[Режим работы класса.]]></description>
+          <long-description><![CDATA[Возможные варианты:
+internal_db - используется внутренняя БД класса;
+external_db - используется объект пользовательской БД.
+TODO Пока работает только режим internal_db.
+По умолчанию: internal_db]]></long-description>
+          <tag line="126" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="142" package="Default">
+        <name>$classpath</name>
+        <default><![CDATA[__DIR__]]></default>
+        <docblock line="138">
+          <description><![CDATA[Содержит путь к директории класса.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="138" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="147" package="Default">
+        <name>$error</name>
+        <default><![CDATA['']]></default>
+        <docblock line="144">
+          <description><![CDATA[]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="144" name="var" description="хранит ошибки" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="161" package="">
+        <name>__construct</name>
+        <type>function</type>
+        <docblock line="150">
+          <description><![CDATA[Конструктор.]]></description>
+          <long-description><![CDATA[Используется как:
+<pre><code>$opy = new Onpay('internal_db', 'petyastore', 'ajsdansdbascasc');
+</code></pre>]]></long-description>
+          <tag line="150" name="param" description="режим работы класса onpay. Устанавливает Onpay::$mode" type="string" variable="$mode">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="150" name="param" description="адрес формы onpay. Устанавливает Onpay::$userform" type="string" variable="$username">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="150" name="param" description="ключ API IN. Устанавливает Onpay::$key" type="string" variable="$key">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="161">
+          <name>$mode</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="161">
+          <name>$username</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="161">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="199" package="">
+        <name>get_form</name>
+        <type>function</type>
+        <docblock line="188">
+          <description><![CDATA[Функция генерирует ссылку или редирект на платежную форму.]]></description>
+          <long-description><![CDATA[Одновременно добавляет запись в БД (только при режиме "internal_db")]]></long-description>
+          <tag line="188" name="param" description="тип формы. Возможные варианты: redirect - генерируется JS-код, при выводе которого в браузер происходит редирект на страницу формы с необходимыми параметрами. url - генерируется ссылка на форму, которую можно вставить в параметр href." type="string" variable="$type">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="188" name="param" description="сумма в валюте ценника. До 2-х знаков после запятой." type="string" variable="$summ">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="188" name="param" description="email адрес покупателя" type="string" variable="$user_email">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="188" name="return" description="возвращает false в случае ошибки. Ошибку записывает в лог-файл." type="bool|string">
+            <type by_reference="false">bool</type>
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="199">
+          <name>$type</name>
+          <default><![CDATA['redirect']]></default>
+          <type/>
+        </argument>
+        <argument line="199">
+          <name>$summ</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="199">
+          <name>$user_email</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="243" package="">
+        <name>get_last_order</name>
+        <type>function</type>
+        <docblock line="239">
+          <description><![CDATA[Последний записанный ID в БД в текущей сессии.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="239" name="return" description="последний записанный ID" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="256" package="">
+        <name>check_errors</name>
+        <type>function</type>
+        <docblock line="248">
+          <description><![CDATA[Валидирует запросы check или pay от Onpay.]]></description>
+          <long-description><![CDATA[Ошибки записывает в лог-файл.
+Используется внутри класса, но возможно пользовательское использование.]]></long-description>
+          <tag line="248" name="param" description="get или post запрос ($_REQUEST)." type="array" variable="$request">
+            <type by_reference="false">array</type>
+          </tag>
+          <tag line="248" name="return" description="возвращает список ошибок или false, если ошибки отсутствуют." type="bool|string">
+            <type by_reference="false">bool</type>
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="256">
+          <name>$request</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="314" package="">
+        <name>gen_xml_answer</name>
+        <type>function</type>
+        <docblock line="290">
+          <description><![CDATA[Генерирует корректный XML-ответ для onpay включая цифровую подпись.]]></description>
+          <long-description><![CDATA[Используется внутри класса, но возможно пользовательское использование.
+Пример использования:
+<pre><code>$opy = new Onpay('internal_db', 'petyastore', 'ajsdansdbascasc');
+$data = array('type' => 'check', 'code' => 0, 'pay_for' => 2, 'comment' => 'Это текстовый комментарий', 'order_amount' => 20, 'order_currency' => 'RUR');
+echo $opy->gen_xml_answer($data);
+</code></pre>
+Где:
+type - ответ на какой запрос генерировать - check или pay;
+code - код возврата:
+0 ОК – означает, что “уведомление о платеже принято” если тип запроса был “pay” или “может быть принято” если тип запроса был “check”;
+
+pay_for - ID Клиента или заказа в системе Мерчанта для которых производится этот платеж;
+comment - Заметка, включённая в платёжную форму в системе Мерчанта. Будет доступна в списке платежей в интерфейсе Мерчанта;
+order_amount - Сумма платежа как в атрибуте “price” платёжной ссылки;
+order_currency - Валюта, как в атрибуте “currency” платёжной ссылки;
+key - ключ API IN.]]></long-description>
+          <tag line="290" name="param" description="массив с данными." type="array" variable="$data">
+            <type by_reference="false">array</type>
+          </tag>
+          <tag line="290" name="return" description="ответ в формате XML" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="314">
+          <name>$data</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="355" package="">
+        <name>process_onpay</name>
+        <type>function</type>
+        <docblock line="347">
+          <description><![CDATA[Функция-процессор onpay.]]></description>
+          <long-description><![CDATA[Обрабатывает запрос и выполняет необходимые действия по смене статуса заказа
+TODO Необходима проработка для возможности использования с объектом БД MySql]]></long-description>
+          <tag line="347" name="param" description="" type="array" variable="$request">
+            <type by_reference="false">array</type>
+          </tag>
+          <tag line="347" name="return" description="возвращает false ghb ytelfxt" type="bool|string">
+            <type by_reference="false">bool</type>
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="355">
+          <name>$request</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="397" package="">
+        <name>generate_error</name>
+        <type>function</type>
+        <docblock line="386">
+          <description><![CDATA[Функция генерирует корректный XML с ошибкой.]]></description>
+          <long-description><![CDATA[2 Только для запросов типа “check” Платёж отклонён. В этом случае OnPay не примет платёж от Клиента;
+3 Ошибка в параметрах. OnPay не будет пытаться повторно послать это уведомление в API мерчанта и отметит этот платёж статусом “уведомление не доставлено в API” если тип запроса “pay”. Если тип запроса “check” – OnPay не примет этот платеж;
+7 Ошибка авторизации. MD5 подпись неверна;
+10 Временная ошибка. OnPay попробует повторно послать это уведомление несколько раз в течение следующих 72 часов после чего пометит платёж статусом “уведомление не доставлено в API”);]]></long-description>
+          <tag line="386" name="param" description="номер ошибки (2,3 или 7)" type="string" variable="$num">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="386" name="param" description="данные запроса" type="array" variable="$data">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="397">
+          <name>$num</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="397">
+          <name>$data</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="419" package="">
+        <name>set_payed_status</name>
+        <type>function</type>
+        <argument line="419">
+          <name>$request</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="default" line="431" package="">
+        <name>get_payed_status</name>
+        <type>function</type>
+        <argument line="431">
+          <name>$order_id</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="446" package="">
+        <name>check_order</name>
+        <type>function</type>
+        <docblock line="438">
+          <description><![CDATA[Проверка существования ордера по его id.]]></description>
+          <long-description><![CDATA[Если установлен параметр $summ - то проверяется и то, чтоб оплаченная сумма была не меньше стоимости заказа.]]></long-description>
+          <tag line="438" name="param" description="id проверяемого ордера" type="integer" variable="$order_id">
+            <type by_reference="false">integer</type>
+          </tag>
+          <tag line="438" name="param" description="если установлен - проверяется еще и корректность суммы." type="string" variable="$summ">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="438" name="return" description="true если ордер существует (и сумма соответсвует), иначе false" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="446">
+          <name>$order_id</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="446">
+          <name>$summ</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="466" package="">
+        <name>get_this_url</name>
+        <type>function</type>
+        <docblock line="459">
+          <description><![CDATA[Возвращает корректный URL до скрипта, в котором запрашивается функция.]]></description>
+          <long-description><![CDATA[(Может применяться для вывода URL API IN мерчанта, если функция callback находится в том-же скрипте,
+что и вызывающая функцию строка скрипта)]]></long-description>
+          <tag line="459" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="478" package="">
+        <name>to_float</name>
+        <type>function</type>
+        <docblock line="472">
+          <description><![CDATA[Округляет/преобразует строковое значение $sum в тип float с 2-я знаками после запятой.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="472" name="param" description="" type="string" variable="$sum">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="472" name="return" description="" type="float">
+            <type by_reference="false">float</type>
+          </tag>
+        </docblock>
+        <argument line="478">
+          <name>$sum</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="default" line="488" package="">
+        <name>err</name>
+        <type>function</type>
+        <argument line="488">
+          <name>$message</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <package name="" full_name=""/>
+  <package name="Default" full_name="Default"/>
+  <namespace name="default" full_name="default"/>
+  <marker count="3">todo</marker>
+  <marker count="0">fixme</marker>
+  <deprecated count="0"/>
+</project>
