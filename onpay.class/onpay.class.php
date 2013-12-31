@@ -145,6 +145,7 @@ class Onpay
 	 * @var string хранит ошибки
 	 */
 	var $error = '';
+	var $log = '';
 
 
 	/**
@@ -179,7 +180,7 @@ class Onpay
 			if ($result === false) {
 				$this->err('База данных не создана из-за сл. ошибок: ' . $this->db->lastErrorMsg());
 			} else {
-				$this->err('Создана база данных onpay...');
+				$this->dbg('Создана база данных onpay...');
 			}
 		}
 	}
@@ -210,21 +211,30 @@ class Onpay
 		}
 		$order_id = $this->get_last_order();
 		$md5summ = $this->to_float($summ);
-		$md5check = strtoupper(md5("fix;$md5summ;$this->curency;$order_id;yes;$this->key"));
-		$url_success = (!empty($this->url_success)) ? "&url_success=$this->url_success" : "";
-		$url_fail = (!empty($this->url_fail)) ? "&url_fail=$this->url_fail" : "";
-		$price_final = ($this->price_final) ? "&price_final=1" : "";
-		$url = "http://secure.onpay.ru/pay/$this->userform?" .
-			"pay_mode=fix&pay_for=$order_id" .
-			"&price=$summ" .
-			"&currency=$this->curency" .
-			"&convert=$this->convert" .
-			"&md5=$md5check" .
-			"&user_email=$user_email" .
-			"&f=$this->form_num" .
-			"&ln=$this->ln" .
-			$url_success . $url_fail . $price_final;
-		if ($this->debug) $this->err($url);
+		$md5check = strtoupper(md5("fix;{$md5summ};{$this->curency};{$order_id};{$this->convert};{$this->key}"));
+		$price_final = ($this->price_final) ? "&price_final=true" : "";
+		$url = "http://secure.onpay.ru/pay/{$this->userform}?pay_mode=fix".
+			"&pay_for={$order_id}" .
+			"&price={$md5summ}" .
+			"&ticker={$this->curency}" .
+			"&convert={$this->convert}" .
+			"&md5={$md5check}" .
+			"&user_email=".urlencode($user_email) .
+			"&f={$this->form_num}";
+		if(!empty($this->ln)) {
+			$url .= "&ln=".$this->ln;
+		}
+		if(!empty($this->price_final)) {
+			$url .= "&price_final=true";
+		}
+		if(!empty($this->url_success)) {
+			$url .= "&url_success=".urlencode($this->url_success);
+		}
+		if(!empty($this->url_fail)) {
+			$url .= "&url_fail=".urlencode($this->url_fail);
+		}
+
+		$this->dbg($url);
 		switch ($type) {
 			case 'redirect':
 				return "<script type='text/javascript'>window.location = '" . $url . "'</script>";
@@ -256,7 +266,8 @@ class Onpay
 	public function check_errors($request)
 	{
 		$type = strtolower($request['type']);
-		if ($type = 'check' || $type = 'pay') {
+		$this->error = '';
+		if ($type == 'check' || $type == 'pay') {
 			switch ($type) {
 				case 'check':
 					if (empty($request['order_amount'])) $this->err('В запросе check отсутствует параметр order_amount');
@@ -271,7 +282,7 @@ class Onpay
 					if (empty($request['paymentDateTime'])) $this->err('В запросе pay отсутствует параметр paymentDateTime');
 					if (empty($request['paid_amount'])) $this->err('В запросе pay отсутствует параметр paid_amount');
 					if (empty($request['balance_currency'])) $this->err('В запросе pay отсутствует параметр balance_currency');
-					if (empty($request['order_currency'])) ('В запросе pay отсутствует параметр order_currency');
+					if (empty($request['order_currency'])) $this->err('В запросе pay отсутствует параметр order_currency');
 					if (empty($request['amount'])) $this->err('В запросе pay отсутствует параметр amount');
 					if (empty($request['balance_amount'])) $this->err('В запросе pay отсутствует параметр balance_amount');
 					if (empty($request['md5'])) $this->err('В запросе pay отсутствует параметр md5');
@@ -280,11 +291,7 @@ class Onpay
 			}
 		} else $this->err('Неверный ответ сервера. Запрос не содержит параметров check или pay');
 
-
-		if (empty($this->error)) return true; else return false;
-
-//		return (empty($this->error)) ? true : false;
-		//var_dump($this->error);
+		return !empty($this->error);
 	}
 
 	/**
@@ -313,35 +320,32 @@ class Onpay
 	 */
 	public function gen_xml_answer($data)
 	{
-		$md5_summ = $data['order_amount'];
-		$md5_data =
-			$data['type'] . ';' .
-				$data['pay_for'] . ';';
-		$md5_data .= ($data['type'] == 'pay') ? $data['onpay_id'] . ';' : '';
-		$md5_data .= ($data['type'] == 'pay') ? $data['pay_for'] . ';' : '';
-		$md5_data .= $md5_summ . ';' .
-			$data['order_currency'] . ';' .
-			$data['code'] . ';' .
-			$this->key;
-		$md5_pass = strtoupper(md5($md5_data));
-		$dom = new DOMDocument('1.0', 'utf-8');
-		$root = $dom->appendChild($dom->createElement('result'));
-		$code = $root->appendChild($dom->createElement('code'));
-		$pay_for = $root->appendChild($dom->createElement('pay_for'));
-		$comment = $root->appendChild($dom->createElement('comment'));
-		$md5 = $root->appendChild($dom->createElement('md5'));
-		$code->appendChild($dom->createTextNode($data['code']));
-		$pay_for->appendChild($dom->createTextNode($data['pay_for']));
-		$comment->appendChild($dom->createTextNode($data['comment']));
-		$md5->appendChild($dom->createTextNode($md5_pass));
-		if ($data['type'] == 'pay') {
-			$onpay_id = $root->appendChild($dom->createElement('onpay_id'));
-			$order_id = $root->appendChild($dom->createElement('order_id'));
-			$onpay_id->appendChild($dom->createTextNode($data['onpay_id']));
-			$order_id->appendChild($dom->createTextNode($data['pay_for']));
+		$ret = "";
+		switch(trim($data['type'])) {
+			case 'pay':
+				$str4md5 = "pay;{$data['pay_for']};{$data['onpay_id']};{$data['pay_for']};{$data['order_amount']};{$data['order_currency']};{$data['code']};".$this->key; 
+				$ret = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<result>
+<code>{$data['code']}</code>
+<comment>{$data['comment']}</comment>
+<onpay_id>{$data['onpay_id']}</onpay_id>
+<pay_for>{$data['pay_for']}</pay_for>
+<order_id>{$data['pay_for']}</order_id>
+<md5>".strtoupper(md5($str4md5))."</md5>
+</result>"; 
+				break;
+			case 'check':
+				$str4md5 = "check;{$data['pay_for']};{$data['order_amount']};{$data['order_currency']};{$data['code']};".$this->key; 
+				$ret = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<result>
+<code>{$data['code']}</code>
+<pay_for>{$data['pay_for']}</pay_for>
+<comment>{$data['comment']}</comment>
+<md5>".strtoupper(md5($str4md5))."</md5>
+</result>";
+				break;
 		}
-		$dom->formatOutput = true;
-		return $dom->saveXML();
+		return $ret;
 	}
 
 	/**
@@ -354,8 +358,8 @@ class Onpay
 	 */
 	public function process_onpay($request)
 	{
-		$type = $request['type'];
-		$order_id = $request['pay_for'];
+		$type = trim($request['type']);
+		$order_id = intval($request['pay_for']);
 		$request['code'] = 0;
 		$request['comment'] = 'OK';
 		if (!$this->check_errors($request)) {
@@ -418,11 +422,11 @@ class Onpay
 
 	private function set_payed_status($request)
 	{
-		$order_id = $request['pay_for'];
-		$onpay_id = $request['onpay_id'];
+		$order_id = intval($request['pay_for']);
+		$onpay_id = intval($request['onpay_id']);
 		$payed_date = date('d:m:Y H:i');
 		if ($this->mode == 'internal_db') {
-			$this->db->exec("UPDATE orders SET onpay_id = $onpay_id, payed_date = '$payed_date', payed = 1 WHERE id = $order_id");
+			$this->db->exec("UPDATE orders SET onpay_id = '$onpay_id', payed_date = '$payed_date', payed = 1 WHERE id = $order_id");
 		} else {
 			//TODO Тут нужно дописать функционал установки статуса "Оплачено" в переданной пользователем БД.
 		}
@@ -445,10 +449,11 @@ class Onpay
 	 */
 	public function check_order($order_id, $summ = null)
 	{
-		$result = $this->db->querySingle("SELECT * FROM orders WHERE id = $order_id", true);
+		$result = $this->db->querySingle("SELECT * FROM orders WHERE id = '{$order_id}'", true);
 		if ($result['id'] && !$result['payed']) {
 			if (isset($summ)) {
-				if ($result['summ'] == $summ || $result['summ'] < $summ && $result['payed'] == '0') return true; else return false;
+				$summ = floatval($summ);
+				return ($summ > 0 && $result['summ'] <= $summ);
 			}
 			return true;
 		} else {
@@ -477,16 +482,23 @@ class Onpay
 	 */
 	public function to_float($sum)
 	{
-		if (strpos($sum, ".")) {
-			$sum = round($sum, 2);
-		} else {
-			$sum = $sum . ".0";
+		$sum = round(floatval($sum), 2);
+		$sum = sprintf('%01.2f', $sum);
+		
+		if (substr($sum, -1) == '0') {
+			$sum = sprintf('%01.1f', $sum);
 		}
+		
 		return $sum;
 	}
 
 	public function err($message)
 	{
 		$this->error .= $message . '<br/>';
+	}
+
+	public function dbg($message)
+	{
+		if($this->debug) $this->log .= $message . '<br/>';
 	}
 }
